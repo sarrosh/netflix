@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Netflix Alpha</title>
+
+	<style>
+		
+body {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	background: black;
+}
+video {
+	height: 100vh;
+	width: 100vw;
+	padding: 0;
+	margin: 0;
+	background: black;
+	position: absolute;
+}
+.play-btn-cont {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.3s all;
+}
+.play-btn {
+	height: 150px;
+	width: 150px;
+	border-radius: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.play-btn img {
+	height: 80px;
+	width: 80px;
+}
+
+	</style>
+</head>
+<body>
+	<span style="display:none;" id="token">paused</span>
+	<video src="https://cf.streamflixserver.site/movies/2017/despicableme3.mkv" nocontrols id="myVideo"></video>
+	<div class="play-btn-cont">
+		<div class="play-btn" onclick="vidplay()" id="playButton">
+			<img src="src/play-button.png" alt="">
+		</div>
+	</div>
+
+<script>
+
+	document.addEventListener('keydown', function(event) {
+  	console.log('Key pressed:', event.key);
+  	trigger();
+	});
+
+	function vidplay() {
+		const video = document.querySelector('#myVideo');
+		video.play();
+		// animate btn out
+		document.querySelector('#playButton').style.scale = '1.5';
+		document.querySelector('#playButton').style.opacity = '0%';
+		document.querySelector('#token').innerHTML = 'playing';
+
+		document.querySelector('.play-btn-cont').style.background = "rgba(0,0,0,0)";
+		document.querySelector('.play-btn-cont').style.backdropFilter = "blur(0px)";
+	}
+
+	function vidpause() {
+		const video = document.querySelector('#myVideo');
+		video.pause();
+		// animate btn out
+		document.querySelector('#playButton').style.scale = '1';
+		document.querySelector('#playButton').style.opacity = '100%';
+		document.querySelector('#token').innerHTML = 'paused';
+
+		document.querySelector('.play-btn-cont').style.background = "rgba(0,0,0,0.8)";
+		document.querySelector('.play-btn-cont').style.backdropFilter = "blur(20px)";
+	}
+
+	function trigger() {
+		var token = document.querySelector('#token').innerHTML;
+		if (token == 'paused') {
+			vidplay();
+			document.querySelector('#token').innerHTML = 'playing';
+		} else {
+			vidpause();
+			document.querySelector('#token').innerHTML = 'paused';
+		}
+	}
+</script>
+</body>
+</html>
